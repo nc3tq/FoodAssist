@@ -1,3 +1,71 @@
+<?php
+
+$hostname = "localhost";
+$database = "foodassist";
+$username = "foodassist";
+$password = "FoodAssist101";
+
+
+$conn = new mysqli($hostname, $username, $password, $database);
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Connected successfully";
+}
+
+// This gets the method for the post and and sees if a user has registered before. If they have, then 
+// an error will show and they will need to login again. If they have not, then their information will 
+// be stored in the database. 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $email = $_POST["email"];
+    $pwd = $_POST["password"];
+    $street = $_POST["street"];
+    $city = $_POST["city"];
+    $state = $_POST["state_name"];
+    $zip = $_POST["zipcode"];
+    $age = $_POST['age'];
+
+
+
+    // $classes = implode(',', $_POST['classes']);
+
+
+    // If the user chooses to be a tutor, then those credentials will be added to a new table. 
+    $query = "SELECT * from User where email='$email'";
+    if ($result = mysqli_query($conn, $query)) {
+        if (mysqli_num_rows($result) == 0) {
+
+            // $sql = "INSERT INTO Students(Name_User, Phone, Email,User_Password, Biography, Classes, Tutor) VALUES ('$name','$phone','$email','$pwd','$bio', '$classes', '$tutor')";
+            $sql = "INSERT INTO User (first_name, last_name, email,user_password, street, city, state_name,zipcode,age) 
+        VALUES ('$first_name','$last_name','$email','$pwd','$street', '$city', '$state', '$zip', '$age')";
+            //A cookie will be set for the user so that when they login they will be redirected to the
+            // dashboard and can start using the tutor app.
+            setcookie('first_name', $first_name, time() + 3600);
+            setcookie('email', $email, time() + 3600);
+            setcookie('pwd', $pwd, time() + 3600);
+            // header('Location: dashboard.php');
+            if ($conn->query($sql) === TRUE) {
+                header('location:landing_page.php');
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        }
+    }
+}
+
+$conn->close();
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +196,7 @@
         </header>
     </div>
 
-    <form id="regForm" action="register.php">
+    <form id="regForm" action="register.php" method="post">
         <!-- One "tab" for each step in the form: -->
         <div class="tab">
             <h1 class='tab_name'>Account Information</h1>

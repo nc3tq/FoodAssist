@@ -1,3 +1,15 @@
+<html lang="en">
+<meta charset="utf-8">
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
 <style>
     @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
@@ -10,15 +22,15 @@
     }
 
     ::-webkit-input-placeholder {
-        color: gray;
+        color: #696969;
     }
 
     ::-moz-placeholder {
-        color: gray;
+        color: #696969;
     }
 
     :-moz-placeholder {
-        color: gray
+        color: #696969
     }
 
     html {
@@ -26,7 +38,7 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-    
+
 
     body {
         font-family: 'Lato', sans-serif;
@@ -35,9 +47,9 @@
         -webkit-background-size: cover;
         -moz-background-size: cover;
         background-size: cover;
-        color: gray;
+        color: #696969;
         overflow: hidden;
-        opacity:1;
+        opacity: 1;
     }
 
     ul,
@@ -47,7 +59,7 @@
     }
 
     a {
-        color: gray;
+        color: #696969;
         text-decoration: none;
         cursor: pointer;
         opacity: 1;
@@ -77,7 +89,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: gray;
+        color: #696969;
         padding: 10px 100px 0;
     }
 
@@ -98,9 +110,9 @@
     }
 
     a.btn {
-        color: gray;
+        color: #696969;
         padding: 10px;
-        border: 1px solid gray;
+        border: 1px solid #696969;
         -webkit-transition: all 0.2s;
         -moz-transition: all 0.2s;
         transition: all 0.2s;
@@ -108,8 +120,8 @@
 
     a.btn:hover {
         background: white;
-        border: 1px solid gray;
-        color: gray;
+        border: 1px solid #696969;
+        color: #696969;
     }
 
     .cover {
@@ -142,8 +154,8 @@
     }
 
     .flex-form input[type="submit"]:hover {
-        background: rgb(83,105,45);
-        border: 1px solid rgb(83,105,45);
+        background: rgb(83, 105, 45);
+        border: 1px solid rgb(83, 105, 45);
     }
 
     .flex-form {
@@ -175,7 +187,7 @@
         bottom: 0;
         right: 0;
         padding: 25px 100px;
-        color: gray;
+        color: #696969;
     }
 
     @media all and (max-width:800px) {
@@ -240,6 +252,90 @@
             display: none;
         }
     }
+
+    .modal-login {
+        color: #636363;
+        width: 350px;
+    }
+
+    .modal-login .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .modal-login .modal-header {
+        border-bottom: none;
+        position: relative;
+        justify-content: center;
+    }
+
+    .modal-login h4 {
+        text-align: center;
+        font-size: 26px;
+    }
+
+    .modal-login .form-group {
+        position: relative;
+    }
+
+    .modal-login i {
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        font-size: 18px;
+    }
+
+    .modal-login .form-control {
+        padding-left: 40px;
+    }
+
+    .modal-login .form-control:focus {
+        border-color: #00ce81;
+    }
+
+    .modal-login .form-control,
+    .modal-login .btn {
+        min-height: 40px;
+        border-radius: 3px;
+    }
+
+    .modal-login .hint-text {
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .modal-login .close {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+    }
+
+    .modal-login .btn {
+        background: #556B2F;
+        border: none;
+        line-height: normal;
+    }
+
+    .modal-login .btn:hover,
+    .modal-login .btn:focus {
+        background: #556B2F;
+    }
+
+    .modal-login .modal-footer {
+        background: #ecf0f1;
+        border-color: #dee4e7;
+        text-align: center;
+        margin: 0 -20px -20px;
+        border-radius: 5px;
+        font-size: 13px;
+        justify-content: center;
+    }
+
+    .modal-login .modal-footer a {
+        color: #696969;
+    }
+
 </style>
 
 
@@ -250,7 +346,7 @@
         <h2><a href="#"><i class="ion-plane"></i> FoodAssist</a></h2>
         <nav>
             <ul>
-               
+
                 <li>
                     <a class="btn" href="#" title="AboutUs">About Us</a>
                 </li>
@@ -258,7 +354,11 @@
                     <a class="btn" href="#" title="Register">Register</a>
                 </li>
                 <li>
-                    <a class="btn" href="#" title="Log In">Log In</a>
+                    <!-- <div class="text-right"> -->
+                    <!-- Button HTML (to Trigger Modal) -->
+                    <a href="#myModal" class="btn" data-toggle="modal">Login</a>
+                    <!-- </div> -->
+                    <!-- <a class="login-trigger" href="#" data-target="#login">Log In</a> -->
                 </li>
             </ul>
         </nav>
@@ -275,9 +375,41 @@
         </form>
         <div id="madeby">
             <span>
-                Photo by <a href="https://unsplash.com/@sylvietittel" target="_blank">Sylvie Tittel </a>
+                Photo by <a href="https://unsplash.com/@misssinterpreted" target="_blank">Sylvie Tittel </a>
             </span>
         </div>
     </div>
 
+</div>
+
+
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Welcome to FoodAssist</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="/examples/actions/confirmation.php" method="post">
+                    <div class="form-group">
+                        <i class="fa fa-user"></i>
+                        <input type="text" class="form-control" placeholder="Username" required="required">
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" class="form-control" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
 </div>

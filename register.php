@@ -38,10 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "SELECT * from User where email='$email'";
     if ($result = mysqli_query($conn, $query)) {
         if (mysqli_num_rows($result) == 0) {
-
+            echo $zip, $street;
             // $sql = "INSERT INTO Students(Name_User, Phone, Email,User_Password, Biography, Classes, Tutor) VALUES ('$name','$phone','$email','$pwd','$bio', '$classes', '$tutor')";
             $sql = "INSERT INTO User (first_name, last_name, email,user_password, street, city, state_name,zipcode,age) 
         VALUES ('$first_name','$last_name','$email','$pwd','$street', '$city', '$state', '$zip', '$age')";
+            
             //A cookie will be set for the user so that when they login they will be redirected to the
             // dashboard and can start using the tutor app.
             setcookie('first_name', $first_name, time() + 3600);
@@ -49,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             setcookie('pwd', $pwd, time() + 3600);
             // header('Location: dashboard.php');
             if ($conn->query($sql) === TRUE) {
-                header('location:landing_page.php');
+                // header('location:landing_page.php');
+                echo $zip, $street, $state;
+
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
@@ -210,10 +213,10 @@ $conn->close();
             <p><input placeholder="First Name" oninput="this.className = ''" name="first_name"></p>
             <p><input placeholder="Last Name" oninput="this.className = ''" name="last_name"></p>
             <p><input placeholder="Age" oninput="this.className = ''" name="age"></p>
-            <p><input placeholder="Street Address" oninput="this.className = ''" name="sa"></p>
+            <p><input placeholder="Street Address" oninput="this.className = ''" name="street"></p>
             <p><input placeholder="City" oninput="this.className = ''" name="city"></p>
-            <p><input placeholder="State" oninput="this.className = ''" name="state"></p>
-            <p><input placeholder="Zip-Code" oninput="this.className = ''" name="zip_code"></p>
+            <p><input placeholder="State" oninput="this.className = ''" name="state_name"></p>
+            <p><input placeholder="Zip-Code" oninput="this.className = ''" name="zipcode"></p>
 
         </div>
         <div style="overflow:auto;">

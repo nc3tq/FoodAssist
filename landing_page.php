@@ -1,14 +1,15 @@
-<html lang="en">
-<meta charset="utf-8">
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+<head>
+    <html lang="en">
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='style.css' rel='stylesheet'>
+</head>
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
@@ -335,10 +336,7 @@
     .modal-login .modal-footer a {
         color: #696969;
     }
-
 </style>
-
-
 
 <div class="container">
 
@@ -351,7 +349,7 @@
                     <a class="btn" href="#" title="AboutUs">About Us</a>
                 </li>
                 <li>
-                    <a class="btn" href="#" title="Register">Register</a>
+                    <a class="btn" href="register.php" title="Register">Register</a>
                 </li>
                 <li>
                     <!-- <div class="text-right"> -->
@@ -392,7 +390,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="/examples/actions/confirmation.php" method="post">
+                <form action="landing_page.php" method="post">
                     <div class="form-group">
                         <i class="fa fa-user"></i>
                         <input type="text" class="form-control" placeholder="Username" required="required">
@@ -404,6 +402,25 @@
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
                     </div>
+
+                    <div> <?php $hostname = "localhost";
+                            $database = "foodassist";
+                            $username = "foodassist";
+                            $password = "FoodAssist101";
+                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                                $email = $_POST["email"];
+                                $pwd = $_POST["pwd"];
+
+                                $conn = new mysqli($hostname, $username, $password, $database);
+                                if (isset($_POST['login'])) {
+                                    $select = mysqli_query($conn, "SELECT * FROM User WHERE email = '$email' AND user_password = '$pwd'");
+                                    if (mysqli_num_rows($select) == 0) {
+                                        echo '<div>Either email or password is incorrect </div>';
+                                    }
+                                }
+                            } ?></div>
+
                 </form>
 
             </div>
@@ -413,3 +430,61 @@
         </div>
     </div>
 </div>
+
+
+<?php
+// Starts a session with the localhost, database, username, and password
+session_start();
+$hostname = "localhost";
+$database = "foodassist";
+$username = "foodassist";
+$password = "FoodAssist101";
+
+
+$conn = new mysqli($hostname, $username, $password, $database);
+
+
+function reject($entry)
+{
+    echo 'Please <a href="landing_page.php">Log in </a>';
+    exit();    // exit the current script, no value is returned
+}
+
+
+// sees if the connection has failed or has been successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// This allows the user to signin to the account. It checks to see if the user is in the database and
+// if she or he is then they would be redirected to the dashboard. If not, then they will get an error that 
+// the email or password is incorrect and would need to sign up. 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $email = $_POST["email"];
+    $pwd = $_POST["pwd"];
+    // $name = $_POST["name"];
+
+    echo $pwd;
+    echo $email;
+
+    if (isset($_POST['login'])) {
+        $select = mysqli_query($conn, "SELECT * FROM User WHERE email = '$email' AND user_password = '$pwd'");
+        if (mysqli_num_rows($select) > 0) {
+            $row = mysqli_fetch_array($select);
+            $username = $row['first_name'];
+            // This sets a cookie for the new user and also starts a session based on the email and
+            // redirects the user to the dashboard page. 
+
+            $_SESSION['email'] = $email;
+            setcookie('first_name', $username, time() + 3600);
+            setcookie('email', $email, time() + 3600);
+            setcookie('pwd', $pwd, time() + 3600);
+            header('Location: dashboard.php');
+        } else {
+            // This validates to see if the username was typed in correctly. 
+            echo '<div Either email or password is incorrect </div>';
+        }
+    }
+}
+?>
